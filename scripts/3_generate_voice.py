@@ -7,7 +7,7 @@ import os
 import asyncio
 import edge_tts
 
-VOICE = "en-IN-NeerjaNeural"
+VOICE = "en-IN-PrabhatNeural"
 
 
 def generate_voiceover(script_path=None, out_path=None):
@@ -22,7 +22,7 @@ def generate_voiceover(script_path=None, out_path=None):
         script_text = f.read()
 
     async def _generate():
-        communicate = edge_tts.Communicate(script_text, VOICE, rate="+2%")
+        communicate = edge_tts.Communicate(script_text, VOICE, rate="-15%")
         await communicate.save(out_path)
 
     asyncio.run(_generate())
