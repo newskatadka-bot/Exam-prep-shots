@@ -1,12 +1,13 @@
 """
 Step 3 — Generate voiceover audio using edge-tts (Microsoft's free
-neural TTS) — free, no API key, natural-sounding Hindi voice.
+neural TTS) — free, no API key, natural-sounding English (Indian
+accent) voice.
 """
 import os
 import asyncio
 import edge_tts
 
-VOICE = "hi-IN-SwaraNeural"
+VOICE = "en-IN-NeerjaNeural"
 
 
 def generate_voiceover(script_path=None, out_path=None):

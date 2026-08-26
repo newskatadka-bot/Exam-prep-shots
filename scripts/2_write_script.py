@@ -27,9 +27,9 @@ and chapter. Write:
 2. A clear step-by-step solution (3-5 concise steps)
 3. The final answer
 
-Then write a SPOKEN narration script explaining this in Hinglish
-(natural Hindi-English mix, clear and encouraging, like a favorite
-teacher explaining it simply) that:
+Then write a SPOKEN narration script explaining this in clear,
+simple English (encouraging tone, like a favorite teacher explaining
+it simply) that:
 - Reads the question clearly
 - Walks through each step briefly and clearly (don't rush key formulas)
 - States the final answer clearly

@@ -95,7 +95,6 @@ def generate_video(out_path=None):
     script_path = os.path.join(OUTPUT_DIR, "script.txt")
     qa_path = os.path.join(OUTPUT_DIR, "qa_data.json")
     out_path = out_path or os.path.join(OUTPUT_DIR, "video.mp4")
-    srt_path = os.path.join(OUTPUT_DIR, "captions.srt")
 
     os.makedirs(SLIDES_DIR, exist_ok=True)
 
@@ -103,7 +102,6 @@ def generate_video(out_path=None):
         qa = json.load(f)
 
     duration = get_audio_duration(audio_path)
-    build_captions_srt(script_path, duration, srt_path)
 
     tag = f"{qa['board']} Class {qa['class']} - {qa['subject']}"
 
@@ -139,10 +137,6 @@ def generate_video(out_path=None):
         "ffmpeg", "-y",
         "-i", slideshow_path,
         "-i", audio_path,
-        "-vf", (
-            f"subtitles={srt_path}:force_style='FontSize=28,PrimaryColour=&HFFFFFF&,"
-            f"OutlineColour=&H000000&,BorderStyle=3,Outline=2,Alignment=2,MarginV=100,Bold=1'"
-        ),
         "-c:v", "libx264", "-preset", "fast",
         "-c:a", "aac", "-b:a", "192k",
         "-pix_fmt", "yuv420p",
