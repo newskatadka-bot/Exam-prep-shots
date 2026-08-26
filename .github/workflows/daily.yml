@@ -1,0 +1,44 @@
+name: Daily Exam Prep Short
+
+on:
+  schedule:
+    - cron: "30 1 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ffmpeg and fonts
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Create output folder
+        run: mkdir -p output
+
+      - name: Restore YouTube auth token
+        run: echo "${{ secrets.YOUTUBE_TOKEN_B64 }}" | base64 -d > youtube_token.json
+
+      - name: Run daily pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_TOKEN_FILE: youtube_token.json
+        run: python scripts/run_daily.py
+
+      - name: Commit updated topic index
+        run: |
+          git config --global user.email "bot@users.noreply.github.com"
+          git config --global user.name "auto-bot"
+          git add output/topic_index.txt
+          git commit -m "Update topic index [skip ci]" || echo "No changes to commit"
+          git push
